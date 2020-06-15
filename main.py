@@ -21,24 +21,29 @@ def device_discovery(gateway):
         if gateway[:-3] in lines[i] and host_name not in lines[i]:
             print(lines[i][20:] + ": " + lines[i+2][30:])
 
-def gateway_scan(gateway):
-    cmd = "nmap -T4 -A -v -Pn {:}".format(gateway) 
+def agressive_scan(ip):
+    cmd = "nmap -T5 -A -v -Pn {:}".format(ip) 
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-    gateway_scan_output_raw, gateway_scan_error = process.communicate()
-    print(gateway_scan_output_raw)
+    agressive_scan_output_raw, agressive_scan_error = process.communicate()
+    print(agressive_scan_output_raw)
 
+
+#check if running as root
 if os.getuid() != 0:
     exit("Run netinfo with sudo. Exiting.")
 
+#get hostnmae
 host_name = socket.gethostname()
-gateway = get_default_gateway_linux()
+#get gateway
+gateway = get_default_gateway_linux() 
 
+###display gateway
 print("Gateway: " + gateway)
 
 ###device discovery
-print("Device Discovery: \n")
+print("***Device Discovery***")
 device_discovery(gateway)
 
 ###nmap on router
-print("Scan on Gateway: \n")
-gateway_scan(gateway)
+print("***Agressive NMAP Scan on Gateway***")
+agressive_scan(gateway)
