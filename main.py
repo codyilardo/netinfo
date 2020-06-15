@@ -22,7 +22,7 @@ def device_discovery(gateway):
             print(lines[i][20:] + ": " + lines[i+2][30:])
 
 def agressive_scan(ip):
-    cmd = "nmap -T5 -A -v -Pn {:}".format(ip) 
+    cmd = "nmap -T5 -A -v -Pn {:}".format(ip)
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     agressive_scan_output_raw, agressive_scan_error = process.communicate()
     print(agressive_scan_output_raw)
@@ -35,7 +35,7 @@ if os.getuid() != 0:
 #get hostnmae
 host_name = socket.gethostname()
 #get gateway
-gateway = get_default_gateway_linux() 
+gateway = get_default_gateway_linux()
 
 ###display gateway
 print("Gateway: " + gateway)

@@ -1,2 +1,3 @@
 # netinfo
-Script to automate some common networking tools in my workflow
+Script to automate some common network enumeration tools.
+
