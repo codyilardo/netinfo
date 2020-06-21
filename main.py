@@ -22,16 +22,7 @@ def device_discovery(gateway):
             devices.append((lines[i][21:]).strip())
             print(lines[i][21:] + ": " + lines[i+2][31:])
 
-<<<<<<< HEAD
-def gateway_scan(gateway):
-    cmd = "nmap -T4 -A -v -Pn {:}".format(gateway)
-=======
-def agressive_scan(ip):
-    cmd = "nmap -T5 -A -v -Pn {:}".format(ip)
->>>>>>> 0656acbce15b0d857a420ca3182bbb2771bf4ff4
-    process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-    agressive_scan_output_raw, agressive_scan_error = process.communicate()
-    print(agressive_scan_output_raw)
+
 
 
 #check if running as root
@@ -56,11 +47,3 @@ gateway_scan(gateway)
 print("***Device Discovery***")
 device_discovery(gateway)
 print(devices)
-
-<<<<<<< HEAD
-###select device scan
-=======
-###nmap on router
-print("***Agressive NMAP Scan on Gateway***")
-agressive_scan(gateway)
->>>>>>> 0656acbce15b0d857a420ca3182bbb2771bf4ff4
