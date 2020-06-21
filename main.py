@@ -18,11 +18,12 @@ def device_discovery(gateway):
     discovery_output_raw, discovery_error = process.communicate()
     lines = discovery_output_raw.split('\n')[2:]
     for i in range(0,len(lines)):
-        if gateway[:-3] in lines[i] and host_name not in lines[i]:
-            print(lines[i][20:] + ": " + lines[i+2][30:])
+        if gateway[:-3] in lines[i] and host_name not in lines[i]: #host_name is for the last line of nmap output that throws off formatting
+            devices.append((lines[i][21:]).strip())
+            print(lines[i][21:] + ": " + lines[i+2][31:])
 
 def gateway_scan(gateway):
-    cmd = "nmap -T4 -A -v -Pn {:}".format(gateway) 
+    cmd = "nmap -T4 -A -v -Pn {:}".format(gateway)
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     gateway_scan_output_raw, gateway_scan_error = process.communicate()
     print(gateway_scan_output_raw)
@@ -32,13 +33,18 @@ if os.getuid() != 0:
 
 host_name = socket.gethostname()
 gateway = get_default_gateway_linux()
+devices = []
+
 
 print("Gateway: " + gateway)
-
-###device discovery
-print("Device Discovery: \n")
-device_discovery(gateway)
 
 ###nmap on router
 print("Scan on Gateway: \n")
 gateway_scan(gateway)
+
+###device discovery
+print("Device Discovery: \n")
+device_discovery(gateway)
+print(devices)
+
+###select device scan
